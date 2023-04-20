@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper = UserMapper.INSTANCE;
     @Override
     public UserDto register(UserDto userDto) {
-        return userMapper.toDto(userRep.save(userMapper.toEntity(userDto)));
+        return userMapper.toDto(userRep.save(toEntity(userDto)));
     }
 
     @Override
