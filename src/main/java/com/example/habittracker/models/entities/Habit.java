@@ -1,4 +1,4 @@
-package com.example.habittracker.entity;
+package com.example.habittracker.models.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
