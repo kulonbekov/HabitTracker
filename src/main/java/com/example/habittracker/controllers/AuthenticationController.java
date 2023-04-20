@@ -1,4 +1,4 @@
-package com.example.habittracker.config.controllers;
+package com.example.habittracker.controllers;
 
 import com.example.habittracker.models.dtos.UserDto;
 import com.example.habittracker.models.entities.User;
@@ -26,8 +26,8 @@ public class AuthenticationController {
     private final JwtTokenProvider jwtTokenProvider;
     private final UserService userService;
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody AuthenticationRequestDto requestDto) {
+    @PostMapping("/authentication")
+    public ResponseEntity<?> authentication(@RequestBody AuthenticationRequestDto requestDto) {
         try {
             String username = requestDto.getUsername();
 
