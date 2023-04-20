@@ -32,6 +32,9 @@ public class Task {
     @Column(name = "day_week_month")
     private DayWeekMonth dayWeekMonth;
 
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Habit habit;
+
     @Column(name = "from_date")
     private Date fromDate;
 
