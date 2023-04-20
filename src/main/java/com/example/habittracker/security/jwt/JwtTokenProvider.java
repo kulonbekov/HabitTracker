@@ -51,18 +51,18 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    public String createResetToken(String username, List<Role> roles) {
+   /* public String createResetToken(String username, List<Role> roles) {
         Claims claims = Jwts.claims().setSubject(username);
         claims.put("roles", getRoleNames(roles));
         Date now = new Date();
-        Date validity = new Date(now.getTime() + 3600000);
+        Date validity = new Date(now.getTime() + validityInMilliseconds);
         return Jwts.builder()//
                 .setClaims(claims)//
                 .setIssuedAt(now)//
                 .setExpiration(validity)//
                 .signWith(SignatureAlgorithm.HS256, secret)//
                 .compact();
-    }
+    }*/
 
     public Authentication getAuthentication(String token) {
         UserDetails userDetails = this.userDetailsService.loadUserByUsername(getUsername(token));
