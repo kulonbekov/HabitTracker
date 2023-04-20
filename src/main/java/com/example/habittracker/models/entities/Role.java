@@ -1,6 +1,6 @@
-package com.example.habittracker.entity;
+package com.example.habittracker.models.entities;
 
-import com.example.habittracker.enums.Status;
+import com.example.habittracker.models.enums.Status;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import lombok.*;

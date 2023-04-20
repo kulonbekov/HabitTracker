@@ -1,6 +1,6 @@
-package com.example.habittracker.entity;
+package com.example.habittracker.models.entities;
 
-import com.example.habittracker.enums.DayWeekMonth;
+import com.example.habittracker.models.enums.DayWeekMonth;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
