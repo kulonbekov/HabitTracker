@@ -2,12 +2,10 @@ package com.example.habittracker.services.impl;
 
 import com.example.habittracker.mappers.UserMapper;
 import com.example.habittracker.models.dtos.UserDto;
-import com.example.habittracker.repository.RoleRep;
+import com.example.habittracker.models.entities.User;
 import com.example.habittracker.repository.UserRep;
 import com.example.habittracker.services.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

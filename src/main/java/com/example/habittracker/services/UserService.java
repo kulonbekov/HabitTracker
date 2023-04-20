@@ -1,7 +1,8 @@
 package com.example.habittracker.services;
 
 import com.example.habittracker.models.dtos.UserDto;
-import org.springframework.security.core.userdetails.User;
+import com.example.habittracker.models.entities.User;
+
 
 import java.util.List;
 
