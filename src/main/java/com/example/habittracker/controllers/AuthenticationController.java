@@ -50,9 +50,15 @@ public class AuthenticationController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody UserDto userDto) {
         try {
-            return ResponseEntity.ok(userService.register(userDto));
+            return ResponseEntity.ok(toString(userService.register(userDto)));
         } catch (RuntimeException e) {
-            throw new RuntimeException("Invalid save User: " + userDto.getUsername() + " ");
+            throw new RuntimeException("Invalid save User: " + userDto.getUsername() + " " + e.getMessage());
         }
+    }
+
+    private String toString(UserDto userDto) {
+        return "Registration completed successfully " +
+                "\n username: " + userDto.getUsername() +
+                "\n email: " + userDto.getEmail();
     }
 }
