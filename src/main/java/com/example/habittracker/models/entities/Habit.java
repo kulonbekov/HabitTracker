@@ -1,6 +1,7 @@
 package com.example.habittracker.models.entities;
 
 import com.example.habittracker.models.enums.Frequency;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -29,9 +30,10 @@ public class Habit extends BaseEntity{
     @Enumerated(EnumType.STRING)
     Frequency frequency;
 
+    @JsonFormat(pattern = "dd.MM.yyyy")
     @Column(name = "start_date")
     private Date startDate;
-
+    @JsonFormat(pattern = "dd.MM.yyyy")
     @Column(name = "end_date")
     private Date endDate;
 
