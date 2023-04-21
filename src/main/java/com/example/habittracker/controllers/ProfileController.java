@@ -55,7 +55,7 @@ public class ProfileController {
 
 
     @DeleteMapping("/delete")
-    @ApiOperation("Удаления записи")
+    @ApiOperation("Удаления профиля")
     ResponseEntity<?> delete(@RequestParam Long id) {
         try {
             profileService.delete(id);
