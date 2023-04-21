@@ -20,10 +20,7 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public ProfileDto save(ProfileDto dto) {
-        Profile profile = profileMapper.toEntity(dto);
-        profile = profileRep.save(profile);
-        dto.setId(profile.getId());
-        return profileMapper.toDto(profile);
+        return profileMapper.toDto(profileRep.save(profileMapper.toEntity(dto)));
     }
 
     @Override
