@@ -6,6 +6,8 @@ import com.example.habittracker.security.jwt.JwtTokenProvider;
 import com.example.habittracker.security.securityDto.AuthenticationRequestDto;
 import com.example.habittracker.security.securityDto.AuthenticationResponseDto;
 import com.example.habittracker.services.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Api(tags = "1. Авторизация/Регистрация")
 @RestController
 @RequestMapping(value = "/api/v1/auth")
 @RequiredArgsConstructor
@@ -26,6 +29,7 @@ public class AuthenticationController {
     private final JwtTokenProvider jwtTokenProvider;
     private final UserService userService;
 
+    @ApiOperation("Авторизация")
     @PostMapping("/authentication")
     public ResponseEntity<?> authentication(@RequestBody AuthenticationRequestDto requestDto) {
         try {
@@ -47,6 +51,7 @@ public class AuthenticationController {
         }
     }
 
+    @ApiOperation("Регистрация")
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody UserDto userDto) {
         try {
