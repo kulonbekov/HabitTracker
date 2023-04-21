@@ -17,14 +17,7 @@ import java.util.List;
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserDto {
-
-    Long id;
-    @JsonFormat(pattern = "dd.MM.yyyy HH:mm")
-    Date created;
-    @JsonFormat(pattern = "dd.MM.yyyy HH:mm")
-    Date updated;
-    Status status;
+public class UserDto extends BaseDto{
     String username;
     String email;
     String password;

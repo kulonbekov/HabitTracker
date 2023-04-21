@@ -17,22 +17,8 @@ import java.util.Date;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "tb_profile")
-public class Profile {
+public class Profile extends BaseEntity{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    @Column(name = "created")
-    @JsonFormat(pattern = "dd.MM.yyyy HH:mm")
-    Date created;
-
-    @Column(name = "updated")
-    @JsonFormat(pattern = "dd.MM.yyyy HH:mm")
-    Date updated;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status")
-    Status status;
     @Column(name = "name")
     String name;
     @Column(name = "icon")
@@ -46,16 +32,4 @@ public class Profile {
     @OneToOne
     @JoinColumn(name = "user_id")
     User user;
-
-    @PrePersist
-    protected void onCreate() {
-        created = new Date();
-        updated = new Date();
-        status = Status.ACTIVE;
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        updated = new Date();
-    }
 }

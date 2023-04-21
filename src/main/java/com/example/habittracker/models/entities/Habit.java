@@ -1,33 +1,38 @@
 package com.example.habittracker.models.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.example.habittracker.models.enums.Frequency;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+
 import javax.persistence.*;
+import java.util.Date;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-@Table(name = Habit.TABLE_NAME)
-public class Habit {
+@Table(name = "tb_habit")
+public class Habit extends BaseEntity{
 
-    public static final String TABLE_NAME = "HABITS";
-    public static final String SEQ_NAME = TABLE_NAME + "_SEQ";
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = SEQ_NAME)
-    @SequenceGenerator(name = SEQ_NAME, sequenceName = SEQ_NAME, allocationSize = 1)
-    private Long id;
-
-    @Column(name = "name_habit")
-    private String nameHabit;
+    @Column(name = "name")
+    String name;
 
     @Column(name = "description")
-    private String description;
+    String description;
 
-    @Column(name = "count_in_day")
-    private Integer countInDay;
+    @Column(name = "target")
+    int target;
+
+    @Column(name = "frequency")
+    @Enumerated(EnumType.STRING)
+    Frequency frequency;
+
+    @Column(name = "start_date")
+    private Date startDate;
+
+    @Column(name = "end_date")
+    private Date endDate;
+
 }

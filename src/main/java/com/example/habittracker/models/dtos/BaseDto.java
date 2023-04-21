@@ -1,8 +1,5 @@
 package com.example.habittracker.models.dtos;
 
-import com.example.habittracker.models.entities.User;
-import com.example.habittracker.models.enums.ColorTheme;
-import com.example.habittracker.models.enums.Language;
 import com.example.habittracker.models.enums.Status;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -17,11 +14,11 @@ import java.util.Date;
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ProfileDto extends BaseDto {
-
-    String name;
-    String icon;
-    Language language;
-    ColorTheme colorTheme;
-    User user;
+public class BaseDto {
+    Long id;
+    @JsonFormat(pattern = "dd.MM.yyyy")
+    Date created;
+    @JsonFormat(pattern = "dd.MM.yyyy")
+    Date updated;
+    Status status;
 }
