@@ -1,5 +1,6 @@
 package com.example.habittracker.security.passwordDto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -10,10 +11,11 @@ import lombok.experimental.FieldDefaults;
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ChangePasswordDto {
+public class ResetPassDto {
 
+    @JsonIgnore
+    String username;
     String email;
-    String token;
-    String password;
-    String passwordConfirmation;
+    @JsonIgnore
+    String resetToken;
 }

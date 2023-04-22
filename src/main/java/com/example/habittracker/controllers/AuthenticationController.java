@@ -3,6 +3,8 @@ package com.example.habittracker.controllers;
 import com.example.habittracker.models.dtos.UserDto;
 import com.example.habittracker.models.entities.User;
 import com.example.habittracker.security.jwt.JwtTokenProvider;
+import com.example.habittracker.security.passwordDto.ChangePassDto;
+import com.example.habittracker.security.passwordDto.ResetPassDto;
 import com.example.habittracker.security.securityDto.AuthenticationRequestDto;
 import com.example.habittracker.security.securityDto.AuthenticationResponseDto;
 import com.example.habittracker.services.UserService;
@@ -61,9 +63,49 @@ public class AuthenticationController {
         }
     }
 
+    @ApiOperation("Сброс пароля пользователя")
+    @PostMapping("/reset-password")
+    ResponseEntity<?> resetPass(@RequestBody ResetPassDto resetPassDto) {
+        try{
+            User user = userService.findByEmail(resetPassDto.getEmail());
+            if (user == null) {
+                throw new NullPointerException("The email address '" + resetPassDto.getEmail() + "' is invalid");
+            }
+            String token = jwtTokenProvider.createResetToken(user.getUsername(), user.getRoles());
+            resetPassDto.setUsername(user.getUsername());
+            resetPassDto.setResetToken(token);
+            userService.resetPassword(resetPassDto);
+            return ResponseEntity.ok("Message sent successfully....");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>("Error sending email", HttpStatus.CONFLICT);
+        }
+    }
+
+    @ApiOperation("Создать новый пароль пользователя")
+    @PostMapping("/change-password")
+    ResponseEntity<?> changePassword(@RequestBody ChangePassDto changeDto) {
+        if (!jwtTokenProvider.validateToken(changeDto.getToken())) {
+            throw new RuntimeException("Token has expired");
+        }
+        if (!changeDto.getPassword().equals(changeDto.getPasswordConfirmation())) {
+            throw new RuntimeException("passwords do not match");
+        }
+        try {
+            userService.changePassword(changeDto);
+            return ResponseEntity.ok("Password changed successfully....");
+        } catch (Exception e) {
+            return new ResponseEntity<>("Invalid change password", HttpStatus.CONFLICT);
+        }
+    }
+
+
+
     private String toString(UserDto userDto) {
         return "Registration completed successfully " +
                 "\n username: " + userDto.getUsername() +
                 "\n email: " + userDto.getEmail();
     }
+
+
 }
