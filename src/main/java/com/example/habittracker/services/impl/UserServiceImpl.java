@@ -7,6 +7,7 @@ import com.example.habittracker.models.entities.User;
 import com.example.habittracker.models.enums.Status;
 import com.example.habittracker.repository.RoleRep;
 import com.example.habittracker.repository.UserRep;
+import com.example.habittracker.security.passwordDto.ResetPasswordDto;
 import com.example.habittracker.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -68,5 +69,10 @@ public class UserServiceImpl implements UserService {
         user.setStatus(Status.ACTIVE);
 
         return user;
+    }
+
+    private void settingEmail(ResetPasswordDto dto){
+
+
     }
 }
