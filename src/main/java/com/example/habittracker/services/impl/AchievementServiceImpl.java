@@ -60,7 +60,7 @@ public class AchievementServiceImpl implements AchievementService {
             Calendar calendarProgress = Calendar.getInstance();
             calendarProgress.setTime(item.getProgressDate());
 
-            if (item.getTarget() == habitDto.getTarget() &&
+            if (item.getTarget() >= habitDto.getTarget() &&
                     calendarProgress.get(Calendar.YEAR) == calendar.get(Calendar.YEAR) &&
                     calendarProgress.get(Calendar.DAY_OF_YEAR) == calendar.get(Calendar.DAY_OF_YEAR)) {
                 count++;
@@ -87,10 +87,10 @@ public class AchievementServiceImpl implements AchievementService {
         if(count == diffInDay){
             achievementDto.setPoints(100);
             achievementDto.setAchievement(true);
-            achievementDto.setResult("Достижение получено!");
+            achievementDto.setResult("Вы молодец! Цель достигнута и награда получена. Теперь можно приступать к следующей задаче.");
         }else{
             achievementDto.setPoints(0);
-            achievementDto.setResult("Достижение не получено!");
+            achievementDto.setResult("К сожалению, вы не выполнили свою привычку и не получили достижений.");
         }
 
         Achievement achievement = achMapper.toEntity(achievementDto);

@@ -1,6 +1,7 @@
 package com.example.habittracker.models.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -23,7 +24,8 @@ public class Achievement extends BaseEntity{
     int points;
     boolean isAchievement;
     String result;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ManyToOne
     @JoinColumn(name = "profile_id")
     Profile profile;
 

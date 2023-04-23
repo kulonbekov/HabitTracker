@@ -2,6 +2,7 @@ package com.example.habittracker.models.dtos;
 
 import com.example.habittracker.models.entities.Profile;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -22,5 +23,6 @@ public class AchievementDto extends BaseDto{
     int points;
     boolean isAchievement;
     String result;
+    @JsonIgnore
     Profile profile;
 }
