@@ -26,7 +26,7 @@ public class HabitServiceImpl implements HabitService {
     @Override
     public HabitDto findById(Long id) {
         return habitMapper.toDto(habitRep.findById(id)
-                .orElseThrow(()->new RuntimeException("Habit no found")));
+                .orElseThrow(()->new RuntimeException("Habit is not found")));
     }
 
     @Override
@@ -37,7 +37,7 @@ public class HabitServiceImpl implements HabitService {
     @Override
     public HabitDto update(HabitDto dto) {
         Habit habit = habitRep.findById(dto.getId())
-                .orElseThrow(()->new RuntimeException("Habit no found"));
+                .orElseThrow(()->new RuntimeException("Habit is not found"));
         habit.setName(dto.getName());
         habit.setDescription(dto.getDescription());
         habit.setTarget(dto.getTarget());
@@ -50,7 +50,7 @@ public class HabitServiceImpl implements HabitService {
     @Override
     public HabitDto delete(Long id) {
         HabitDto habitDto = habitMapper.toDto(habitRep.findById(id)
-                .orElseThrow(()->new RuntimeException("Habit no found")));
+                .orElseThrow(()->new RuntimeException("Habit is not found")));
         habitDto.setStatus(Status.DELETED);
         return save(habitDto);
     }

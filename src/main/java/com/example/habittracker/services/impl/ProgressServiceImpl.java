@@ -27,7 +27,7 @@ public class ProgressServiceImpl implements ProgressService {
     @Override
     public ProgressDto findById(Long id) {
         return progressMapper.toDto(progressRep.findById(id)
-                .orElseThrow(() -> new RuntimeException("Progress no found")));
+                .orElseThrow(() -> new RuntimeException("Progress is not found")));
     }
 
     @Override
@@ -38,7 +38,7 @@ public class ProgressServiceImpl implements ProgressService {
     @Override
     public ProgressDto delete(Long id) {
         ProgressDto profileDto = progressMapper.toDto(progressRep.findById(id)
-                .orElseThrow(()->new RuntimeException("Profile no found")));
+                .orElseThrow(()->new RuntimeException("Profile is not found")));
         profileDto.setStatus(Status.DELETED);
         return save(profileDto);
     }

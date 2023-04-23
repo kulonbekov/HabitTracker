@@ -26,7 +26,7 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public ProfileDto findById(Long id) {
         return profileMapper.toDto(profileRep.findById(id)
-                .orElseThrow(()->new RuntimeException("Profile no found")));
+                .orElseThrow(()->new RuntimeException("Profile is not found")));
     }
 
     @Override
@@ -36,7 +36,7 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public ProfileDto update(ProfileDto dto) {
-        Profile profile = profileRep.findById(dto.getId()).orElseThrow(()->new RuntimeException("Profile no found"));
+        Profile profile = profileRep.findById(dto.getId()).orElseThrow(()->new RuntimeException("Profile is not found"));
         profile.setName(dto.getName());
         profile.setLanguage(dto.getLanguage());
         profile.setColorTheme(dto.getColorTheme());
@@ -46,7 +46,7 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public ProfileDto delete(Long id) {
         ProfileDto profileDto = profileMapper.toDto(profileRep.findById(id)
-                .orElseThrow(()->new RuntimeException("Profile no found")));
+                .orElseThrow(()->new RuntimeException("Profile is not found")));
         profileDto.setStatus(Status.DELETED);
         return save(profileDto);
     }
