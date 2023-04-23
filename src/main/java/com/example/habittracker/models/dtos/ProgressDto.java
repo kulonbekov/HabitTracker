@@ -1,5 +1,7 @@
 package com.example.habittracker.models.dtos;
 
+import com.example.habittracker.models.entities.Habit;
+import com.example.habittracker.models.entities.Profile;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AccessLevel;
@@ -15,9 +17,9 @@ import java.util.Date;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProgressDto extends BaseDto{
 
-    Long profileId;
-    Long habitId;
+    Profile profile;
+    Habit habit;
     @JsonFormat(pattern = "dd.MM.yyyy")
-    private Date progressDate;
+    Date progressDate;
     int target;
 }

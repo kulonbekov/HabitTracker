@@ -16,10 +16,12 @@ import java.util.Date;
 @Table(name = "tb_progress")
 public class Progress extends BaseEntity{
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne
+    @JoinColumn(name = "profile_id")
     Profile profile;
-
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    //(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne
+    @JoinColumn(name = "habit_id")
     Habit habit;
 
     @JsonFormat(pattern = "dd.MM.yyyy")
