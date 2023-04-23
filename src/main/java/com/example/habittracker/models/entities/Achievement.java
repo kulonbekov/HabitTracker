@@ -1,12 +1,10 @@
 package com.example.habittracker.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Getter
@@ -20,17 +18,16 @@ public class Achievement extends BaseEntity{
 
     String name;
     String description;
+    @JsonFormat(pattern = "dd.MM.yyyy")
     Date date;
     int points;
     boolean isAchievement;
     String result;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "profile_id")
     Profile profile;
 
-    protected void onCreate() {
-        isAchievement = false;
-    }
+
 
 }
 

@@ -22,7 +22,7 @@ VALUES ('Голубой_закат', '2023-04-23 21:27:56.04', 'https://www.flat
 
 ----tb_habit----------------------------------------------------------------------------------------------------------
 insert into tb_habit(created, status, updated, description, end_date, frequency, name, start_date, target)
-VALUES ('2023-04-21 21:35:01.297', 'ACTIVE', '2023-04-23 21:35:01.297', 'В течение 21 дня решать задания на leetcode', '2023-05-11 00:00:00', 'DAILY', '21 day coding in leetcode', '2023-04-21 00:00:00', 1);
+VALUES ('2023-04-21 00:00:00', 'ACTIVE', '2023-04-23', 'В течение 21 дня решать задания на leetcode', '2023-05-11', 'DAILY', '21 day coding in leetcode', '2023-04-21 00:00:00', 1);
 
 ----tb_progress----------------------------------------------------------------------------------------------------------
 insert into tb_progress (created, status, updated, progress_date, target, habit_id, profile_id)

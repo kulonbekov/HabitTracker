@@ -6,6 +6,8 @@ import com.example.habittracker.mappers.ProgressMapper;
 import com.example.habittracker.models.dtos.AchievementDto;
 import com.example.habittracker.models.dtos.HabitDto;
 import com.example.habittracker.models.dtos.ProgressDto;
+import com.example.habittracker.models.entities.Achievement;
+import com.example.habittracker.models.entities.Profile;
 import com.example.habittracker.models.enums.Status;
 import com.example.habittracker.repository.AchievementRep;
 import com.example.habittracker.repository.HabitRep;
@@ -15,9 +17,13 @@ import com.example.habittracker.services.AchievementService;
 import com.example.habittracker.services.HabitService;
 import com.example.habittracker.services.ProgressService;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
@@ -29,16 +35,69 @@ public class AchievementServiceImpl implements AchievementService {
     private final HabitService habitService;
     /*private final ProgressService progressService;*/
     private final ProgressRep progressRep;
+
     private ProgressMapper progressMapper = ProgressMapper.INSTANCE;
+    private final ProfileRep profileRep;
 
 
     @Override
     public AchievementDto save(Long profileId, Long habitId) {
-        HabitDto habitDto = habitService.findById(habitId);
+
+        Profile profile = profileRep.findById(profileId).get();
         List<ProgressDto> progressDtos = progressMapper.toDtos(progressRep.findAllByProfile(profileId));
+        HabitDto habitDto = habitService.findById(habitId);
 
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(habitDto.getStartDate());
+        calendar.add(Calendar.DAY_OF_MONTH, -1);
 
-        return null;
+        int count = 0;
+        for (int i = 0; i<progressDtos.size(); i++) {
+
+            ProgressDto item = progressDtos.get(i);
+
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+            Calendar calendarProgress = Calendar.getInstance();
+            calendarProgress.setTime(item.getProgressDate());
+
+            if (item.getTarget() == habitDto.getTarget() &&
+                    calendarProgress.get(Calendar.YEAR) == calendar.get(Calendar.YEAR) &&
+                    calendarProgress.get(Calendar.DAY_OF_YEAR) == calendar.get(Calendar.DAY_OF_YEAR)) {
+                count++;
+            }
+        }
+
+        Calendar startDate = Calendar.getInstance();
+        Calendar endDate = Calendar.getInstance();
+        startDate.setTime(habitDto.getStartDate());
+        endDate.setTime(habitDto.getEndDate());
+        endDate.add(Calendar.DAY_OF_MONTH, 1);
+        long diffInMillis = endDate.getTimeInMillis() - startDate.getTimeInMillis();
+        Long diffInDay = TimeUnit.MILLISECONDS.toDays(diffInMillis);
+
+        AchievementDto achievementDto = new AchievementDto();
+        achievementDto.setName(habitDto.getName());
+        achievementDto.setDescription(habitDto.getDescription());
+        achievementDto.setDate(new Date());
+        achievementDto.setProfile(profile);
+
+        System.out.println("diff "+ diffInDay);
+        System.out.println("count "+ count);
+
+        if(count == diffInDay){
+            achievementDto.setPoints(100);
+            achievementDto.setAchievement(true);
+            achievementDto.setResult("Достижение получено!");
+        }else{
+            achievementDto.setPoints(0);
+            achievementDto.setResult("Достижение не получено!");
+        }
+
+        Achievement achievement = achMapper.toEntity(achievementDto);
+        achievement = achievementRep.save(achievement);
+
+        return achMapper.toDto(achievement);
+
     }
 
     @Override

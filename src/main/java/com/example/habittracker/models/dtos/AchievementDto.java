@@ -1,6 +1,7 @@
 package com.example.habittracker.models.dtos;
 
 import com.example.habittracker.models.entities.Profile;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -16,6 +17,7 @@ import java.util.Date;
 public class AchievementDto extends BaseDto{
     String name;
     String description;
+    @JsonFormat(pattern = "dd.MM.yyyy")
     Date date;
     int points;
     boolean isAchievement;
