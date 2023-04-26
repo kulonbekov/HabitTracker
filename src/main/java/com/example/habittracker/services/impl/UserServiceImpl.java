@@ -13,6 +13,8 @@ import com.example.habittracker.security.passwordDto.ChangePassDto;
 import com.example.habittracker.security.passwordDto.ResetPassDto;
 import com.example.habittracker.services.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,6 +27,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
+    private static final String TOPIC = "NewTopic";
+
+    private final KafkaTemplate<String, UserDto> kafkaTemplate;
     private final UserRep userRep;
     private final RoleRep roleRep;
     private final PasswordEncoder passwordEncoder;
@@ -32,8 +37,11 @@ public class UserServiceImpl implements UserService {
     private final JavaMailSender mailSender;
     private final ResetPassRep resetPassRep;
     private ResetPassMapper passMapper = ResetPassMapper.INSTANCE;
+
+
     @Override
     public UserDto register(UserDto userDto) {
+        kafkaTemplate.send(TOPIC, userDto);
         return userMapper.toDto(userRep.save(toEntity(userDto)));
     }
 
