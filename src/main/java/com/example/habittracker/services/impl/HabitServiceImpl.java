@@ -2,11 +2,13 @@ package com.example.habittracker.services.impl;
 
 import com.example.habittracker.mappers.HabitMapper;
 import com.example.habittracker.models.dtos.HabitDto;
+import com.example.habittracker.models.dtos.UserDto;
 import com.example.habittracker.models.entities.Habit;
 import com.example.habittracker.models.enums.Status;
 import com.example.habittracker.repository.HabitRep;
 import com.example.habittracker.services.HabitService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,11 +17,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class HabitServiceImpl implements HabitService {
 
+    private static final String TOPIC = "NewTopic";
+
+    private final KafkaTemplate<String, HabitDto> kafkaTemplate;
     private final HabitRep habitRep;
     private HabitMapper habitMapper = HabitMapper.INSTANCE;
 
     @Override
     public HabitDto save(HabitDto dto) {
+        kafkaTemplate.send(TOPIC, dto);
         return habitMapper.toDto(habitRep.save(habitMapper.toEntity(dto)));
     }
 

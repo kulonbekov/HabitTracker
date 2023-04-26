@@ -18,6 +18,8 @@ import com.example.habittracker.services.HabitService;
 import com.example.habittracker.services.ProgressService;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
@@ -28,6 +30,9 @@ import java.util.concurrent.TimeUnit;
 @Service
 @RequiredArgsConstructor
 public class AchievementServiceImpl implements AchievementService {
+    private static final String TOPIC = "NewTopic";
+
+    private final KafkaTemplate<String, AchievementDto> kafkaTemplate;
     private final AchievementRep achievementRep;
     private AchievementMapper achMapper = AchievementMapper.INSTANCE;
     /*private final HabitRep habitRep;
@@ -95,6 +100,8 @@ public class AchievementServiceImpl implements AchievementService {
 
         Achievement achievement = achMapper.toEntity(achievementDto);
         achievement = achievementRep.save(achievement);
+
+        kafkaTemplate.send(TOPIC, achievementDto);
 
         return achMapper.toDto(achievement);
 
